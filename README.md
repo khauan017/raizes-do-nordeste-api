@@ -10,6 +10,10 @@
 
 API REST desenvolvida em Node.js para gerenciamento de um restaurante.
 
+## 📖 Sobre
+
+Este projeto foi desenvolvido com o objetivo de simular a API de gerenciamento de um restaurante, permitindo o controle de usuários, produtos, estoque e pedidos utilizando arquitetura MVC e autenticação JWT.
+
 ## 🚀 Tecnologias
 
 - Node.js
