@@ -9,6 +9,8 @@ const produtoRoutes = require("./routes/produtoRoutes");
 const estoqueRoutes = require("./routes/estoqueRoutes");
 const pedidoRoutes = require("./routes/pedidoRoutes");
 const itemPedidoRoutes = require("./routes/itemPedidoRoutes");
+const pagamentoRoutes = require("./routes/pagamentoRoutes");
+const fidelidadeRoutes = require("./routes/fidelidadeRoutes");
 const verificarToken = require("./middlewares/authMiddleware");
 
 const app = express();
@@ -22,6 +24,8 @@ app.use("/produtos", verificarToken, produtoRoutes);
 app.use("/estoque", verificarToken, estoqueRoutes);
 app.use("/pedidos", verificarToken, pedidoRoutes);
 app.use("/itens-pedido", verificarToken, itemPedidoRoutes);
+app.use("/pagamentos", pagamentoRoutes);
+app.use("/fidelidade", fidelidadeRoutes);
 
 app.use(
     "/api-docs",

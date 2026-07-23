@@ -5,6 +5,8 @@ const listarPedidos = (callback) => {
     const sql = `
         SELECT
             pedidos.id,
+            pedidos.cliente_id,
+            pedidos.unidade_id,
             usuarios.nome AS cliente,
             unidades.nome AS unidade,
             pedidos.valor_total,
@@ -28,6 +30,8 @@ const buscarPedidoPorId = (id, callback) => {
     const sql = `
         SELECT
             pedidos.id,
+            pedidos.cliente_id,
+            pedidos.unidade_id,
             usuarios.nome AS cliente,
             unidades.nome AS unidade,
             pedidos.valor_total,
@@ -68,21 +72,17 @@ const criarPedido = (pedido, callback) => {
 
 };
 
-const atualizarStatus = (id, pedido, callback) => {
+const atualizarStatus = (id, status, callback) => {g
 
     const sql = `
         UPDATE pedidos
-        SET
-            status = ?
+        SET status = ?
         WHERE id = ?
     `;
 
     db.query(
         sql,
-        [
-            pedido.status,
-            id
-        ],
+        [status, id],
         callback
     );
 
