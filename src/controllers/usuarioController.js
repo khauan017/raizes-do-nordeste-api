@@ -1,4 +1,5 @@
 const usuarioModel = require("../models/usuarioModel");
+const bcrypt = require("bcrypt");
 
 const listar = (req, res) => {
 
@@ -34,21 +35,40 @@ const buscarPorId = (req, res) => {
 
 };
 
-const criar = (req, res) => {
+const criar = async (req, res) => {
 
-    usuarioModel.criarUsuario(
-        req.body,
-        (err, result) => {
+    try {
 
-            if (err) {
-                return res.status(500).json(err);
+        const senhaCriptografada = await bcrypt.hash(req.body.senha, 10);
+
+        const usuario = {
+            ...req.body,
+            senha: senhaCriptografada
+        };
+
+        usuarioModel.criarUsuario(
+            usuario,
+            (err) => {
+
+                if (err) {
+                    return res.status(500).json(err);
+                }
+
+                res.status(201).json({
+                    mensagem: "Usuário criado com sucesso!"
+                });
+
             }
+        );
 
-            res.status(201).json({
-                mensagem: "Usuário criado com sucesso"
-            });
-        }
-    );
+    } catch (err) {
+
+        res.status(500).json({
+            mensagem: "Erro ao criptografar a senha."
+        });
+
+    }
+
 };
 
 const atualizar = (req, res) => {

@@ -1,15 +1,12 @@
-//codigo para a execução do login//
-
 const authModel = require("../models/authModel");
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 
 const login = (req, res) => {
 
     const { email, senha } = req.body;
 
-//erros na hora da execução//
-
-    authModel.buscarUsuarioPorEmail(email, (err, results) => {
+    authModel.buscarUsuarioPorEmail(email, async (err, results) => {
 
         if (err) {
             return res.status(500).json({
@@ -25,7 +22,12 @@ const login = (req, res) => {
 
         const usuario = results[0];
 
-        if (usuario.senha !== senha) {
+        const senhaValida = await bcrypt.compare(
+            senha,
+            usuario.senha
+        );
+
+        if (!senhaValida) {
             return res.status(401).json({
                 mensagem: "E-mail ou senha inválidos."
             });

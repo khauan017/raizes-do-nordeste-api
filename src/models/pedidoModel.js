@@ -78,16 +78,36 @@ const atualizarStatus = (id, pedido, callback) => {
     `;
 
     db.query(
-            sql,
-            [
-                pedido.status,
-                id
-            ],
-            callback
-        );
-
+        sql,
+        [
+            pedido.status,
+            id
+        ],
+        callback
+    );
 
 };
+
+const atualizarValorTotal = (pedidoId, callback) => {
+
+    const sql = `
+        UPDATE pedidos
+        SET valor_total = (
+            SELECT COALESCE(SUM(subtotal), 0)
+            FROM itens_pedido
+            WHERE pedido_id = ?
+        )
+        WHERE id = ?;
+    `;
+
+    db.query(
+        sql,
+        [pedidoId, pedidoId],
+        callback
+    );
+
+};
+
 
 const excluirPedido = (id, callback) => {
 
@@ -105,5 +125,6 @@ listarPedidos,
 buscarPedidoPorId,
 criarPedido,
 atualizarStatus,
-excluirPedido,
+atualizarValorTotal,
+excluirPedido
 };

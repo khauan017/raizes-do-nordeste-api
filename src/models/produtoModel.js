@@ -11,11 +11,16 @@ const listarProdutos = (callback) => {
 
 const buscarProdutoPorId = (id, callback) => {
 
-    db.query(
-        "SELECT * FROM produtos WHERE id = ?",
-        [id],
-        callback
-    );
+    const sql = `
+        SELECT
+            id,
+            nome,
+            preco
+        FROM produtos
+        WHERE id = ?;
+    `;
+
+    db.query(sql, [id], callback);
 
 };
 
