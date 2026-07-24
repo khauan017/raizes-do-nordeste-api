@@ -59,6 +59,13 @@ const confirmarPagamento = (id, callback) => {
 
         const pagamento = results[0];
 
+        if (pagamento.status_pagamento === "APROVADO") {
+            return callback({
+                status: 400,
+                mensagem: "Pagamento já foi confirmado."
+    });
+};
+
         pagamentoModel.confirmarPagamento(id, (err) => {
 
             if (err) return callback(err);

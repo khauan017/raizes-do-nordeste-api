@@ -25,10 +25,10 @@ const verificarToken = require("../middlewares/authMiddleware");
  *             properties:
  *               nome:
  *                 type: string
- *                 example: João da Silva
+ *                 example: Administrador 2
  *               email:
  *                 type: string
- *                 example: joao@email.com
+ *                 example: admin@email.com
  *               senha:
  *                 type: string
  *                 example: 123456
